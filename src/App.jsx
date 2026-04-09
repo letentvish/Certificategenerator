@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Certificate from './components/Certificate';
 import { useLMS } from './hooks/useLMS';
+import { PRESETS } from './utils/presets';
 import './App.css';
 
 function App() {
@@ -46,9 +47,12 @@ function App() {
   // Handle Preset Loading
   useEffect(() => {
     if (lmsData?.preset) {
-      const allPresets = [...(lmsData.preset.isCustom ? customPresets : require('../utils/presets').PRESETS)];
-      setProgram(lmsData.preset.program);
-      setCollege(lmsData.preset.college);
+      const allPresets = [...PRESETS, ...(customPresets || [])];
+      const matchedPreset = allPresets.find(p => p.id === lmsData.preset?.id) || lmsData.preset;
+      if (matchedPreset) {
+        setProgram(matchedPreset.program);
+        setCollege(matchedPreset.college);
+      }
     }
     if (lmsData?.student) {
       setStudent(s => ({ ...s, ...lmsData.student }));
