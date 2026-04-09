@@ -59,11 +59,7 @@ export default function Sidebar({ college, setCollege, program, setProgram, stud
   return (
     <aside className="sidebar">
       <div className="sidebar-head">
-        <div className="sidebar-head-logos">
-          <div className="sh-logo">MKraft <span>Capability Solutions</span></div>
-          <div className="sh-x">✦</div>
-          <div className="sh-logo">{college.acronym} <span>{college.city}</span></div>
-        </div>
+        <div className="sh-logo" style={{marginBottom: '8px'}}>MKraft <span>Capability Solutions</span></div>
         <h1>Certificate Generator</h1>
         <p>Build & export program completion certificates</p>
       </div>
