@@ -1,0 +1,640 @@
+    /* ============================================================
+       CSS VARIABLES
+    ============================================================ */
+    :root {
+      --navy:        #0d2158;
+      --navy-mid:    #132a6e;
+      --gold:        #c9a84c;
+      --gold-light:  #e8c96a;
+      --gold-pale:   rgba(201,168,76,0.12);
+      --gold-border: rgba(201,168,76,0.3);
+      --cream:       #fef9ee;
+      --cream-2:     #f8f2e0;
+      --text-dark:   #1a1a2e;
+      --sidebar-bg:  #111827;
+      --sidebar-s2:  #1a2235;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-script:  'Great Vibes', cursive;
+      --font-body:    'Inter', sans-serif;
+      --font-cert:    'Lato', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); background: #dde3ec; min-height: 100vh; }
+
+    /* ============================================================
+       APP LAYOUT
+    ============================================================ */
+    .app {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow: hidden;
+    }
+
+    .sidebar-head {
+      background: var(--navy);
+      padding: 18px 22px 14px;
+      border-bottom: 2px solid var(--gold);
+      flex-shrink: 0;
+    }
+    .sidebar-head-logos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .sh-logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--gold-light); }
+    .sh-logo span { color: rgba(255,255,255,0.5); font-size: 0.75rem; font-family: var(--font-body); font-weight: 400; }
+    .sh-x { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    .sidebar-head h1 { font-size: 0.78rem; font-weight: 600; color: white; letter-spacing: 0.04em; }
+    .sidebar-head p  { font-size: 0.67rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+    .sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 18px 10px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+
+    /* Form sections */
+    .fsec { margin-bottom: 20px; }
+    .fsec-title {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--gold-border);
+    }
+
+    .fg { margin-bottom: 9px; }
+    .fg label {
+      display: block;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .fg input, .fg select, .fg textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 5px;
+      padding: 7px 10px;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.76rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.22); }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.1);
+    }
+    .fg select option { background: #1a2235; }
+    .fg textarea { resize: vertical; min-height: 56px; }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    /* LMS note */
+    .lms-note {
+      background: rgba(255,160,0,0.1);
+      border: 1px solid rgba(255,160,0,0.25);
+      border-radius: 5px;
+      padding: 8px 10px;
+      font-size: 0.66rem;
+      color: #ffb347;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .lms-note strong { display: block; margin-bottom: 2px; font-size: 0.68rem; }
+    .lms-note code {
+      background: rgba(255,255,255,0.1);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.64rem;
+    }
+
+    /* Domain items */
+    .dom-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 6px; }
+    .dom-item { display: flex; gap: 5px; align-items: center; }
+    .dom-item input { flex: 1; }
+    .dom-rm {
+      width: 24px; height: 24px;
+      background: rgba(255,60,60,0.18);
+      border: none; border-radius: 4px;
+      color: #ff8080; cursor: pointer;
+      font-size: 0.75rem; flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .dom-rm:hover { background: rgba(255,60,60,0.35); }
+    .btn-add-dom {
+      width: 100%;
+      background: transparent;
+      border: 1px dashed var(--gold-border);
+      border-radius: 5px;
+      color: var(--gold);
+      padding: 5px;
+      font-size: 0.68rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-add-dom:hover { background: rgba(201,168,76,0.1); }
+
+    /* Actions */
+    .sidebar-actions {
+      background: var(--navy);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-p {
+      background: linear-gradient(135deg, #c9a84c 0%, #e8c96a 100%);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-p:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-s {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.6);
+      padding: 7px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-s:hover { background: rgba(255,255,255,0.07); color: white; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+    /* ============================================================
+       PREVIEW AREA
+    ============================================================ */
+    .preview {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .prev-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1020px;
+      margin-bottom: 20px;
+    }
+    .prev-bar h2 { font-size: 0.72rem; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+    .prev-tag {
+      background: white;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.68rem;
+      color: #aaa;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ============================================================
+       CERTIFICATE
+    ============================================================ */
+    .cert {
+      width: 1020px;
+      background: var(--cream);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.1);
+      border-radius: 3px;
+      position: relative;
+      overflow: visible;
+    }
+
+    /* Gold outer border frames */
+    .cert-frame {
+      position: absolute;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .cert-frame-outer {
+      inset: 7px;
+      border: 1.5px solid var(--gold);
+    }
+    .cert-frame-inner {
+      inset: 11px;
+      border: 0.5px solid rgba(201,168,76,0.35);
+    }
+    .cert-frame { position: absolute; border-style: solid; }
+
+    /* Corner ornaments */
+    .cert-corner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      z-index: 21;
+      pointer-events: none;
+    }
+    .cert-corner svg { width: 100%; height: 100%; }
+    .cert-corner.tl { top: 3px; left: 3px; }
+    .cert-corner.tr { top: 3px; right: 3px; transform: scaleX(-1); }
+    .cert-corner.bl { bottom: 3px; left: 3px; transform: scaleY(-1); }
+    .cert-corner.br { bottom: 3px; right: 3px; transform: scale(-1); }
+
+    /* Watermark seal */
+    .cert-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 220px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ---- Logo row ---- */
+    .cert-logos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 52px 16px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .logo-isms { display: flex; align-items: center; gap: 8px; }
+    .logo-isms-badge {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .logo-isms-badge-pill {
+      font-size: 0.3rem;
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .pill-aicte { background: var(--navy); color: white; }
+    .pill-tbs   { background: var(--gold); color: var(--navy); }
+
+    .isms-wordmark {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+    .isms-wordmark .gear { color: var(--gold); }
+    .isms-city {
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      color: #999;
+      text-align: center;
+      margin-top: 1px;
+    }
+
+    .logo-center-divider {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    .logo-mkraft { display: flex; align-items: center; gap: 10px; }
+    .mkraft-icon {
+      width: 38px; height: 38px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .mkraft-icon svg { width: 20px; height: 20px; }
+    .mkraft-text { }
+    .mkraft-name {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .mkraft-sub {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    /* ---- Navy Banner ---- */
+    .cert-banner {
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr 0.65fr 1fr;
+      align-items: center;
+      padding: 10px 52px;
+      position: relative;
+      z-index: 5;
+    }
+    .banner-col { }
+    .banner-col.right { text-align: right; }
+    .banner-col.center { text-align: center; }
+    .banner-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 0.02em;
+    }
+    .banner-sub {
+      font-size: 0.55rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 2px;
+    }
+    .banner-collab {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+    }
+
+    /* ---- Certificate Body ---- */
+    .cert-body {
+      padding: 28px 64px 22px;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .cert-main-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+
+    .cert-prog-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .cpt-line {
+      flex: 1;
+      max-width: 90px;
+      height: 1px;
+    }
+    .cpt-line.l { background: linear-gradient(to right, transparent, var(--gold)); }
+    .cpt-line.r { background: linear-gradient(to left, transparent, var(--gold)); }
+    .cert-prog-title {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .cert-certify-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .cert-name {
+      font-family: var(--font-script);
+      font-size: 3.4rem;
+      color: var(--navy);
+      line-height: 1.2;
+      min-height: 3.6rem;
+      position: relative;
+    }
+    .cert-name-placeholder {
+      font-size: 2rem;
+      color: rgba(13,33,88,0.25);
+      font-family: var(--font-display);
+      font-style: italic;
+    }
+
+    .cert-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold) 15%, var(--gold) 85%, transparent);
+      margin: 12px 0;
+    }
+
+    .cert-meta-row {
+      font-size: 0.72rem;
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .cert-meta-sep { margin: 0 10px; color: var(--gold); }
+    .cert-meta-label { font-weight: 700; }
+
+    .cert-completion-text {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 8px 0 18px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ---- Details Boxes ---- */
+    .cert-boxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .cert-box {
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-border);
+      border-radius: 4px;
+      padding: 13px 16px 12px;
+    }
+
+    .cert-box-title {
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      padding-bottom: 7px;
+      border-bottom: 1px solid var(--gold-border);
+      margin-bottom: 8px;
+    }
+
+    .cert-box-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 0.68rem;
+      line-height: 1.45;
+    }
+    .cert-box-label {
+      font-weight: 700;
+      color: #2a2a2a;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+    .cert-box-val { color: #444; }
+    .cert-box-val em { font-style: italic; color: #666; font-size: 0.64rem; }
+
+    .dom-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin-bottom: 4px;
+      font-size: 0.68rem;
+      color: #2a2a2a;
+      line-height: 1.4;
+    }
+    .dom-bullet { color: var(--gold); font-size: 0.72rem; line-height: 1.5; flex-shrink: 0; }
+
+    /* ---- Footer ---- */
+    .cert-footer {
+      background: var(--navy);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 52px;
+    }
+
+    .sig-block { text-align: center; }
+    .sig-line { width: 110px; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 5px; }
+    .sig-label { font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 2px; font-style: italic; }
+    .sig-name { font-size: 0.64rem; font-weight: 700; color: white; letter-spacing: 0.05em; }
+    .sig-org  { font-size: 0.58rem; color: var(--gold); margin-top: 1px; }
+
+    .footer-center { text-align: center; }
+    .fc-id-label { font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 3px; }
+    .fc-id {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--gold-light);
+      margin-bottom: 3px;
+      min-height: 1.2em;
+    }
+    .fc-date { font-size: 0.6rem; color: rgba(255,255,255,0.55); margin-bottom: 8px; }
+    .fc-qr {
+      width: 50px; height: 50px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      margin: 0 auto 4px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 4px;
+    }
+    .fc-qr svg { width: 100%; height: 100%; opacity: 0.7; }
+    .fc-scan { font-size: 0.45rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+
+    /* ============================================================
+       BELOW CERT — Integration Note
+    ============================================================ */
+    .cert-note {
+      margin-top: 22px;
+      max-width: 1020px;
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      padding: 14px 18px;
+      border-left: 3px solid var(--gold);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .cert-note h3 { font-size: 0.72rem; color: var(--navy); font-weight: 700; margin-bottom: 6px; }
+    .cert-note p  { font-size: 0.7rem; color: #666; line-height: 1.65; }
+    .cert-note code {
+      background: #f3f4f6; padding: 1px 5px;
+      border-radius: 3px; font-size: 0.67rem; color: #333;
+    }
+    .param-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .param-chip {
+      background: #f8f9fb;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      padding: 5px 8px;
+      font-size: 0.65rem;
+    }
+    .param-chip code { background: none; padding: 0; color: var(--navy); font-weight: 700; }
+    .param-chip span { color: #888; }
+
+    /* ============================================================
+       PRINT
+    ============================================================ */
+    @media print {
+      body, html { margin: 0; padding: 0; background: white; }
+      .app { display: block; }
+      .sidebar, .prev-bar, .cert-note { display: none !important; }
+      .preview { padding: 0; background: white; display: block; }
+      .cert { 
+        width: 100%; 
+        max-height: 100vh;
+        box-shadow: none; 
+        margin: 0;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+      .cert-boxes, .cert-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      @page { size: A4 landscape; margin: 0; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      #root { display: block; height: 100%; margin: 0; padding: 0; }
+    }
