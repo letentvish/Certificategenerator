@@ -25,25 +25,25 @@ export default function MKCertificate({ student, program, issuer, customBadge })
   const rIn  = 64;    // inner dark circle
   const rHex = 36;    // hexagon apothem scale
 
-  // ── Seamless Circular Text Logic ──
+  // ── Robust Circular Text Logic ──
+  const rRng = 90;                                   // Standard fixed radius for stability
   const fontSize = 8.5;
-  const letterSpacing = 2.5;
-  const charWidth = fontSize * 0.62 + letterSpacing; // Natural width per char
-  const segment = ` ${courseName}  ✦ `;              // One unit
-  const segW = segment.length * charWidth;
-  const circBase = 2 * Math.PI * 90;                 // Target circumference at R=90
-
-  // 1. Calculate best fit count (closest integer)
-  const N = Math.max(1, Math.round(circBase / segW));
+  const charWidthBase = fontSize * 0.52;              // Base width for Inter Bold (conservative)
+  const segment = ` ${courseName}  ✦ `;              // One segment
+  
+  // Calculate how many times it fits at a "natural" spacing of 2.5
+  const circ = 2 * Math.PI * rRng;                   // ~565
+  const segWNatural = segment.length * (charWidthBase + 2.5);
+  const N = Math.max(1, Math.round(circ / segWNatural));
   const finalStr = segment.repeat(N);
 
-  // 2. Adjust radius slightly so the circumference matches the text length
-  // C = 2 * PI * R => R = C / (2 * PI)
-  const idealR = (N * segW) / (2 * Math.PI);
-  const rRng = Math.max(86, Math.min(94, idealR));   // Clamp radius to stay in bounds
+  // Solve for exact letter-spacing: circ = chars * (base + spacing)
+  // spacing = (circ / chars) - base
+  const totalChars = finalStr.length;
+  const dynamicSpacing = (circ / totalChars) - charWidthBase;
 
-  // 3. Define the path using the final rRng
-  const textPath = `M ${cx},${cy - rRng} A ${rRng},${rRng} 0 1,1 ${cx - 0.1},${cy - rRng}`;
+  // Modern robust circle path (two arcs for 100% coverage)
+  const textPath = `M ${cx},${cy - rRng} a ${rRng},${rRng} 0 1,1 0,${2 * rRng} a ${rRng},${rRng} 0 1,1 0,-${2 * rRng}`;
 
   /* ── Flat-top hexagon points ── */
   const hex = (r) => [0,1,2,3,4,5].map(i => {
@@ -111,9 +111,9 @@ export default function MKCertificate({ student, program, issuer, customBadge })
               </g>
             )}
 
-            {/* Circular text — seamless wrap with stretch to fit perfectly */}
-            <text fontSize={fontSize} fill="#FFFFFF" fillOpacity="1" opacity="1" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={letterSpacing} style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))'}}>
-              <textPath href="#mkTP3" startOffset="0%" textLength="100%" lengthAdjust="spacing">{finalStr}</textPath>
+            {/* Circular text — manually calculated spacing for 100% reliable distribution */}
+            <text fontSize={fontSize} fill="#FFFFFF" fillOpacity="1" opacity="1" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={dynamicSpacing} style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))'}}>
+              <textPath href="#mkTP3" startOffset="0%">{finalStr}</textPath>
             </text>
           </svg>
           {/* Custom badge as HTML <img> — far more reliably captured by html2canvas */}
