@@ -109,7 +109,7 @@
 
 .mk-sub {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.55);
+  color: #ffffff;
   margin-bottom: 10px;
 }
 
@@ -136,7 +136,7 @@
 
 .mk-desc {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.55);
+  color: #ffffff;
   line-height: 1.6;
 }
 
@@ -177,12 +177,12 @@
 
 .mk-issuer-role {
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.55);
+  color: #ffffff;
 }
 
 .mk-issuer-date {
   font-size: 0.65rem;
-  color: rgba(255,255,255,0.35);
+  color: #ffffff;
   margin-top: 4px;
 }
 
@@ -200,7 +200,7 @@
 
 .mk-meta-item {
   font-size: 0.65rem;
-  color: rgba(255,255,255,0.35);
+  color: #ffffff;
   margin-bottom: 3px;
 }
 
