@@ -25,22 +25,29 @@ export default function MKCertificate({ student, program, issuer, customBadge })
   const rIn  = 64;    // inner dark circle
   const rHex = 36;    // hexagon apothem scale
 
-  // ── Robust Circular Text Logic ──
-  const rRng = 90;                                   // Standard fixed radius for stability
+  // ── Variable Radius & Spacing Logic ──
   const fontSize = 8.5;
-  const charWidthBase = fontSize * 0.52;              // Base width for Inter Bold (conservative)
-  const segment = ` ${courseName}  ✦ `;              // One segment
+  const charWidthBase = fontSize * 0.52;              // Base width for Inter Bold
+  const targetLetterSpacing = 3.0;                    // The spacing we "want" to achieve
+  const segment = ` ${courseName}  ✦ `;
   
-  // Calculate how many times it fits at a "natural" spacing of 2.5
-  const circ = 2 * Math.PI * rRng;                   // ~565
-  const segWNatural = segment.length * (charWidthBase + 2.5);
-  const N = Math.max(1, Math.round(circ / segWNatural));
+  // 1. Calculate how many repetitions fit a standard circumferences (~565)
+  const unitW = segment.length * (charWidthBase + targetLetterSpacing);
+  const N = Math.max(1, Math.round(565 / unitW));
   const finalStr = segment.repeat(N);
-
-  // Solve for exact letter-spacing: circ = chars * (base + spacing)
-  // spacing = (circ / chars) - base
   const totalChars = finalStr.length;
-  const dynamicSpacing = (circ / totalChars) - charWidthBase;
+
+  // 2. Calculate the "Perfect Radius" for this amount of text
+  // idealCirc = totalChars * (charWidthBase + targetLetterSpacing)
+  // idealR = idealCirc / (2 * PI)
+  const idealR = (totalChars * (charWidthBase + targetLetterSpacing)) / (2 * Math.PI);
+  
+  // 3. Clamp radius to stay within the badge design bounds
+  const rRng = Math.max(86, Math.min(94, idealR));
+  
+  // 4. Final Fine-Tuning: Calculate the exact letter-spacing for the clamped radius
+  const finalCirc = 2 * Math.PI * rRng;
+  const dynamicSpacing = (finalCirc / totalChars) - charWidthBase;
 
   // Modern robust circle path (two arcs for 100% coverage)
   const textPath = `M ${cx},${cy - rRng} a ${rRng},${rRng} 0 1,1 0,${2 * rRng} a ${rRng},${rRng} 0 1,1 0,-${2 * rRng}`;
