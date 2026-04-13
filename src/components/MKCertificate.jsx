@@ -22,24 +22,27 @@ export default function MKCertificate({ student, program, issuer, customBadge })
   const S    = 220;   // viewBox square
   const cx   = 110;
   const cy   = 110;
-  const rRng = 90;    // circular text radius
   const rIn  = 64;    // inner dark circle
   const rHex = 36;    // hexagon apothem scale
 
-  // ── Circular text: calculate how many times the segment fits ──
-  // Each char is approx (fontSize * 0.62 + letterSpacing) SVG units wide
+  // ── Seamless Circular Text Logic ──
   const fontSize = 8.5;
   const letterSpacing = 2.5;
-  const charWidth = fontSize * 0.62 + letterSpacing;   // ~7.77 units/char
-  const segment = ` ${courseName}  ✦ `;                // one repetition
-  const segmentWidth = segment.length * charWidth;
-  const circumference = 2 * Math.PI * rRng;            // ~565 SVG units
-  // How many times it fits, with a 3% safety gap to ensure visible spacing
-  const repeatCount = Math.max(1, Math.min(6, Math.floor(circumference / (segmentWidth * 1.03))));
-  // Each repetition placed at equally distributed offsets (as percentages)
-  const offsets = Array.from({ length: repeatCount }, (_, i) => ((i / repeatCount) * 100).toFixed(2) + '%');
+  const charWidth = fontSize * 0.62 + letterSpacing; // Natural width per char
+  const segment = ` ${courseName}  ✦ `;              // One unit
+  const segW = segment.length * charWidth;
+  const circBase = 2 * Math.PI * 90;                 // Target circumference at R=90
 
-  // Open circle path: starts at 12 o'clock, goes almost 360deg.
+  // 1. Calculate best fit count (closest integer)
+  const N = Math.max(1, Math.round(circBase / segW));
+  const finalStr = segment.repeat(N);
+
+  // 2. Adjust radius slightly so the circumference matches the text length
+  // C = 2 * PI * R => R = C / (2 * PI)
+  const idealR = (N * segW) / (2 * Math.PI);
+  const rRng = Math.max(86, Math.min(94, idealR));   // Clamp radius to stay in bounds
+
+  // 3. Define the path using the final rRng
   const textPath = `M ${cx},${cy - rRng} A ${rRng},${rRng} 0 1,1 ${cx - 0.1},${cy - rRng}`;
 
   /* ── Flat-top hexagon points ── */
@@ -108,12 +111,10 @@ export default function MKCertificate({ student, program, issuer, customBadge })
               </g>
             )}
 
-            {/* Circular text — evenly distributed repetitions, no merging */}
-            {offsets.map((offset, i) => (
-              <text key={i} fontSize={fontSize} fill="#FFFFFF" fillOpacity="1" opacity="1" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={letterSpacing} style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))'}}>
-                <textPath href="#mkTP3" startOffset={offset}>{segment}</textPath>
-              </text>
-            ))}
+            {/* Circular text — seamless wrap with stretch to fit perfectly */}
+            <text fontSize={fontSize} fill="#FFFFFF" fillOpacity="1" opacity="1" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={letterSpacing} style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))'}}>
+              <textPath href="#mkTP3" startOffset="0%" textLength="100%" lengthAdjust="spacing">{finalStr}</textPath>
+            </text>
           </svg>
           {/* Custom badge as HTML <img> — far more reliably captured by html2canvas */}
           {customBadge && (
