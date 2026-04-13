@@ -115,6 +115,27 @@ function App() {
         allowTaint: true,
         backgroundColor: '#080C1F',
         logging: false,
+        onclone: (clonedDoc) => {
+          // html2canvas can't parse modern oklch() color syntax.
+          // 1. Fix any inline styles with oklch
+          clonedDoc.querySelectorAll('[style]').forEach(node => {
+            const s = node.getAttribute('style') || '';
+            if (s.includes('oklch')) {
+              node.setAttribute('style', s.replace(/oklch\([^)]+\)/gi, 'transparent'));
+            }
+          });
+          // 2. Inject a style override that resets browser-default oklch border/outline colors
+          const fix = clonedDoc.createElement('style');
+          fix.textContent = `
+            *, *::before, *::after {
+              border-color: rgba(255,255,255,0.08) !important;
+              outline-color: transparent !important;
+              text-decoration-color: currentColor !important;
+              column-rule-color: currentColor !important;
+            }
+          `;
+          clonedDoc.head.appendChild(fix);
+        },
       });
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
