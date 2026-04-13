@@ -34,8 +34,8 @@ export default function MKCertificate({ student, program, issuer, customBadge })
   const segment = ` ${courseName}  ✦ `;                // one repetition
   const segmentWidth = segment.length * charWidth;
   const circumference = 2 * Math.PI * rRng;            // ~565 SVG units
-  // How many times it fits, with a 10% safety gap to ensure visible spacing
-  const repeatCount = Math.max(1, Math.min(6, Math.floor(circumference / (segmentWidth * 1.10))));
+  // How many times it fits, with a 3% safety gap to ensure visible spacing
+  const repeatCount = Math.max(1, Math.min(6, Math.floor(circumference / (segmentWidth * 1.03))));
   // Each repetition placed at equally distributed offsets (as percentages)
   const offsets = Array.from({ length: repeatCount }, (_, i) => ((i / repeatCount) * 100).toFixed(2) + '%');
 
@@ -110,7 +110,7 @@ export default function MKCertificate({ student, program, issuer, customBadge })
 
             {/* Circular text — evenly distributed repetitions, no merging */}
             {offsets.map((offset, i) => (
-              <text key={i} fontSize={fontSize} fill="#FFFFFF" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={letterSpacing}>
+              <text key={i} fontSize={fontSize} fill="#FFFFFF" fillOpacity="1" opacity="1" fontFamily="'Inter','Helvetica Neue',sans-serif" fontWeight="700" letterSpacing={letterSpacing} style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.9))'}}>
                 <textPath href="#mkTP3" startOffset={offset}>{segment}</textPath>
               </text>
             ))}
