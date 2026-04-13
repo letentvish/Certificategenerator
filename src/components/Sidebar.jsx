@@ -1,7 +1,7 @@
 import React from 'react';
 import { PRESETS } from '../utils/presets';
 
-export default function Sidebar({ college, setCollege, program, setProgram, student, setStudent, customPresets, saveCustomPreset }) {
+export default function Sidebar({ college, setCollege, program, setProgram, student, setStudent, customPresets, saveCustomPreset, activeTemplate, setActiveTemplate }) {
   
   const handlePresetChange = (e) => {
     const key = e.target.value;
@@ -61,10 +61,21 @@ export default function Sidebar({ college, setCollege, program, setProgram, stud
       <div className="sidebar-head">
         <div className="sh-logo" style={{marginBottom: '8px'}}>MKraft <span>Capability Solutions</span></div>
         <h1>Certificate Generator</h1>
-        <p>Build & export program completion certificates</p>
+        <p>Build &amp; export program completion certificates</p>
       </div>
 
       <div className="sidebar-scroll">
+        {/* Template Switcher */}
+        {setActiveTemplate && (
+          <div className="fsec">
+            <div className="fsec-title">Certificate Template</div>
+            <div className="template-toggle">
+              <button id="tmpl-college-top" className="tmpl-btn active">🏫 College Co-Brand</button>
+              <button id="tmpl-mk-top" className="tmpl-btn" onClick={() => setActiveTemplate('mk-brand')}>⚡ MK Brand</button>
+            </div>
+          </div>
+        )}
+
         {/* Preset Section */}
         <div className="fsec">
           <div className="fsec-title">Program Template</div>

@@ -1,0 +1,328 @@
+/* ================================================================
+   MK BRAND CERTIFICATE — Reference Accurate Layout
+================================================================ */
+
+.mk-cert {
+  width: 1020px;
+  height: 590px;
+  background: #080C1F; /* Very deep dark navy almost black */
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 8px 30px rgba(0,0,0,0.3);
+}
+
+/* ── Deep Background blobs & textures ── */
+.mk-bg-grid {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+.mk-bg-blob { position: absolute; border-radius: 50%; z-index: 0; pointer-events: none; }
+.mk-bg-blob-tl {
+  width: 600px; height: 600px; top: -250px; left: -250px;
+  background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 60%);
+}
+.mk-bg-blob-br {
+  width: 500px; height: 500px; bottom: -200px; right: -150px;
+  background: radial-gradient(circle, rgba(100,50,250,0.08) 0%, transparent 60%);
+}
+
+/* ── Corner bracket accents ── */
+.mk-ca { position: absolute; width: 30px; height: 30px; z-index: 10; pointer-events: none; opacity: 0.55; }
+.mk-ca-tl { top: 18px; left: 18px; border-top: 2px solid #F5A623; border-left: 2px solid #F5A623; border-radius: 4px 0 0 0; }
+.mk-ca-tr { top: 18px; right: 18px; border-top: 2px solid #F5A623; border-right: 2px solid #F5A623; border-radius: 0 4px 0 0; }
+.mk-ca-bl { bottom: 18px; left: 18px; border-bottom: 2px solid #F5A623; border-left: 2px solid #F5A623; border-radius: 0 0 0 4px; }
+.mk-ca-br { bottom: 18px; right: 18px; border-bottom: 2px solid #F5A623; border-right: 2px solid #F5A623; border-radius: 0 0 4px 0; }
+
+
+/* ================================================================
+   GLASS CARD CONTAINER
+================================================================ */
+.mk-glass-card {
+  position: absolute;
+  top: 30px; bottom: 30px;
+  left: 30px; right: 30px;
+  z-index: 5;
+  
+  /* Glassmorphism Effect */
+  background: rgba(255,255,255,0.035);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  box-shadow: 
+    inset 0 1px 1px rgba(255,255,255,0.05),
+    0 12px 36px rgba(0,0,0,0.3);
+
+  /* Inner Layout */
+  padding: 40px 45px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Add an amber left-accent bar to the glass card */
+.mk-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0; width: 3px;
+  background: linear-gradient(to bottom, transparent 15%, #F5A623 35%, #F5A623 65%, transparent 85%);
+  border-radius: 12px 0 0 12px;
+  opacity: 0.6;
+}
+
+/* ================================================================
+   LEFT CONTENT AREA
+================================================================ */
+.mk-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically centers both text & footer uniformly */
+}
+
+.mk-content-left {
+  width: 65%; /* Restrict width to avoid badge overlap */
+}
+
+.mk-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+}
+
+.mk-logo {
+  height: 48px; width: auto; object-fit: contain;
+  filter: brightness(1.1);
+}
+
+.mk-heading {
+  font-size: 2.1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.mk-sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 10px;
+}
+
+.mk-name {
+  font-size: 3.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.mk-name-ph {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.22);
+}
+
+.mk-desc-box {
+  margin-bottom: 50px; /* Fixed margin instead of auto to prevent extreme gaps */
+  max-width: 90%;
+}
+
+.mk-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+
+.mk-desc-program {
+  color: #FFD166;
+  font-weight: 600;
+}
+
+/* ================================================================
+   FOOTER BLOCK
+================================================================ */
+.mk-footer-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.mk-signature-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.mk-sig-line {
+  width: 120px;
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+  margin-bottom: 12px;
+}
+
+.mk-issuer-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.mk-issuer-role {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.mk-issuer-date {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+
+.mk-footer-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.mk-meta-footer {
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+.mk-meta-item {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 3px;
+}
+
+
+/* ================================================================
+   BADGE — Floating inside the glass card, top-right
+================================================================ */
+.mk-badge-wrap {
+  position: absolute;
+  top: 45px;
+  right: 50px;
+  width: 220px;
+  height: 220px;
+  z-index: 10;
+}
+
+.mk-badge-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* HTML <img> overlay for custom badge — sits in the inner circle area */
+.mk-badge-custom-img {
+  position: absolute;
+  /* Inner circle is rIn=64 out of S=220 total, centered at 110,110         */
+  /* So offset from edge: (110-64)/220 = 20.9% → ~21%                       */
+  /* Size: (64*2)/220 = 58.2% → ~58%                                        */
+  top: 21%;
+  left: 21%;
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  border-radius: 50%;
+  z-index: 2; /* sits above SVG bg but circular text SVG already uses overflow:visible */
+}
+
+/* ================================================================
+   BOTTOM RIGHT LOGO
+================================================================ */
+.mk-bottom-right-logo {
+  opacity: 0.9;
+  text-align: right;
+}
+
+
+/* ================================================================
+   SIDEBAR TOGGLE
+================================================================ */
+.template-toggle {
+  display: flex; gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px; padding: 4px; margin-top: 8px;
+}
+.tmpl-btn {
+  flex: 1; padding: 6px 8px; border: none; border-radius: 4px;
+  font-size: 0.68rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; background: transparent;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.03em;
+}
+.tmpl-btn.active  { background: var(--gold); color: var(--navy); }
+.tmpl-btn:not(.active):hover { background: rgba(255,255,255,0.07); color: white; }
+
+/* ================================================================
+   PRINT
+================================================================ */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0 !important;
+  }
+  
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body, html {
+    background: #080C1F !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .mk-cert { 
+    width: 100% !important; 
+    height: 100vh !important; 
+    box-shadow: none !important; 
+    border-radius: 0 !important; 
+    border: none !important; 
+    margin: 0 !important;
+  }
+
+  /* Retain glass-like border, slightly boost background to compensate for loss of blur */
+  .mk-glass-card { 
+    box-shadow: none !important; 
+    border: 1px solid rgba(255,255,255,0.12) !important; 
+    background: rgba(255,255,255,0.05) !important;
+  }
+
+  /* Force the amber bar to show properly */
+  .mk-glass-card::before {
+    opacity: 0.9 !important;
+    background: linear-gradient(to bottom, transparent 15%, #F5A623 35%, #F5A623 65%, transparent 85%) !important;
+  }
+
+  /* PDF engines crush <5% opacities to zero ink. Boost grid/blobs for print! */
+  .mk-bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px) !important;
+  }
+  .mk-bg-blob-tl {
+    background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 60%) !important;
+  }
+  .mk-bg-blob-br {
+    background: radial-gradient(circle, rgba(100,50,250,0.14) 0%, transparent 60%) !important;
+  }
+
+  /* Pull brackets inward safely away from hardware/browser unprintable margins */
+  .mk-ca-tl { top: 25px !important; left: 25px !important; opacity: 0.8 !important; }
+  .mk-ca-tr { top: 25px !important; right: 25px !important; opacity: 0.8 !important; }
+  .mk-ca-bl { bottom: 25px !important; left: 25px !important; opacity: 0.8 !important; }
+  .mk-ca-br { bottom: 25px !important; right: 25px !important; opacity: 0.8 !important; }
+}
