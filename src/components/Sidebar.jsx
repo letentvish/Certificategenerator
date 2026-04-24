@@ -70,8 +70,9 @@ export default function Sidebar({ college, setCollege, program, setProgram, stud
           <div className="fsec">
             <div className="fsec-title">Certificate Template</div>
             <div className="template-toggle">
-              <button id="tmpl-college-top" className="tmpl-btn active">🏫 College Co-Brand</button>
-              <button id="tmpl-mk-top" className="tmpl-btn" onClick={() => setActiveTemplate('mk-brand')}>⚡ MK Brand</button>
+              <button id="tmpl-college-top" className="tmpl-btn active">🏫 College</button>
+              <button id="tmpl-mk-v1-top" className="tmpl-btn" onClick={() => setActiveTemplate('mk-v1')}>⚡ MK Glass</button>
+              <button id="tmpl-mk-v2-top" className="tmpl-btn" onClick={() => setActiveTemplate('mk-v2')}>⚡ MK Modern</button>
             </div>
           </div>
         )}

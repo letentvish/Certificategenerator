@@ -1,0 +1,201 @@
+/* ================================================================
+   MK BRAND CERTIFICATE V2 — Modern Geometric Layout
+================================================================ */
+
+.mk-cert-v2 {
+  width: 1020px;
+  height: 720px; /* Slightly taller to match the image proportions better */
+  background: #0E1752; /* Deep Blue */
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+  display: flex;
+  padding: 60px;
+  box-sizing: border-box;
+}
+
+/* ── Speckled Texture ── */
+.v2-bg-texture {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0.15;
+  background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(to right, transparent, black);
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+  pointer-events: none;
+}
+
+/* ── Geometric Shapes ── */
+.v2-shape-arc {
+  position: absolute;
+  top: -50px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border: 80px solid #5CF2F2;
+  border-radius: 50%;
+  clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+  opacity: 0.9;
+  transform: rotate(-45deg);
+  pointer-events: none;
+}
+
+.v2-shape-semicircle {
+  position: absolute;
+  bottom: 0;
+  right: 150px;
+  width: 250px;
+  height: 125px;
+  background: #50C8FF;
+  border-radius: 0 0 125px 125px;
+  transform: rotate(180deg);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.v2-shape-bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  height: 250px;
+  background: #5CF2F2;
+  border-radius: 0 4px 4px 0;
+  pointer-events: none;
+}
+
+/* ── Layout & Typography ── */
+.v2-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 80px;
+}
+
+.v2-title {
+  font-size: 3.8rem;
+  line-height: 0.95;
+  font-weight: 800;
+  text-transform: lowercase;
+}
+
+.v2-cyan {
+  color: #5CF2F2;
+}
+
+.v2-logo-box {
+  width: 140px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.v2-logo-img {
+  width: 100%;
+  height: auto;
+  filter: brightness(0) invert(1); /* Make logo white */
+}
+
+.v2-body {
+  margin-bottom: 60px;
+}
+
+.v2-award-text {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.v2-name {
+  font-size: 4.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  margin: 0 0 25px 0;
+  line-height: 1;
+}
+
+.v2-desc {
+  font-size: 1.4rem;
+  max-width: 600px;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.v2-footer {
+  display: flex;
+  gap: 80px;
+  margin-top: auto;
+}
+
+.v2-issuer-section, .v2-date-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-label {
+  font-size: 1rem;
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+
+.v2-issuer-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.v2-date {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.v2-badge {
+  position: absolute;
+  bottom: 80px;
+  right: 140px;
+  width: 200px;
+  height: 200px;
+  z-index: 20;
+}
+
+.v2-badge-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.v2-badge-custom-img {
+  position: absolute;
+  top: 21%;
+  left: 21%;
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* ── Responsive Export ── */
+@media print {
+  .mk-cert-v2 {
+    width: 297mm;
+    height: 210mm;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

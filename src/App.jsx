@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Certificate from './components/Certificate';
 import MKCertificate from './components/MKCertificate';
+import MKCertificateV2 from './components/MKCertificateV2';
 import { useLMS } from './hooks/useLMS';
 import { PRESETS } from './utils/presets';
 import html2canvas from 'html2canvas';
@@ -9,11 +10,12 @@ import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 import './App.css';
 import './mk-cert.css';
+import './mk-cert-v2.css';
 
 function App() {
   const { loading, lmsData } = useLMS();
 
-  // Template selection: 'college' | 'mk-brand'
+  // Template selection: 'college' | 'mk-v1' | 'mk-v2'
   const [activeTemplate, setActiveTemplate] = useState('college');
 
   const [customPresets, setCustomPresets] = useState(() => {
@@ -62,8 +64,6 @@ function App() {
   const handleBadgeUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    // Use base64 data URL instead of blob URL — html2canvas cannot access blob URLs
-    // inside SVG <image> elements due to browser security restrictions
     const reader = new FileReader();
     reader.onload = (ev) => setCustomBadge(ev.target.result);
     reader.readAsDataURL(file);
@@ -113,18 +113,15 @@ function App() {
         scale: 3,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#080C1F',
+        backgroundColor: activeTemplate === 'mk-v2' ? '#0E1752' : '#080C1F',
         logging: false,
         onclone: (clonedDoc) => {
-          // html2canvas can't parse modern oklch() color syntax.
-          // 1. Fix any inline styles with oklch
           clonedDoc.querySelectorAll('[style]').forEach(node => {
             const s = node.getAttribute('style') || '';
             if (s.includes('oklch')) {
               node.setAttribute('style', s.replace(/oklch\([^)]+\)/gi, 'transparent'));
             }
           });
-          // 2. Inject a style override that resets browser-default oklch border/outline colors
           const fix = clonedDoc.createElement('style');
           fix.textContent = `
             *, *::before, *::after {
@@ -149,7 +146,6 @@ function App() {
       const x = (pdfW - finalW) / 2;
       const y = (pdfH - finalH) / 2;
       pdf.addImage(imgData, 'PNG', x, y, finalW, finalH);
-      // file-saver handles blob download correctly across all browsers & localhost
       const blob = pdf.output('blob');
       const safeName = (student.name || 'Certificate').replace(/[^a-z0-9_\- ]/gi, '_');
       const filename = `MK-Certificate-${safeName}.pdf`;
@@ -191,10 +187,13 @@ function App() {
               <div className="fsec-title">Certificate Template</div>
               <div className="template-toggle">
                 <button id="tmpl-college-btn" className="tmpl-btn" onClick={() => setActiveTemplate('college')}>
-                  🏫 College Co-Brand
+                  🏫 College
                 </button>
-                <button id="tmpl-mk-btn" className="tmpl-btn active">
-                  ⚡ MK Brand
+                <button id="tmpl-mk-v1-btn" className={`tmpl-btn ${activeTemplate === 'mk-v1' ? 'active' : ''}`} onClick={() => setActiveTemplate('mk-v1')}>
+                  ⚡ MK Glass
+                </button>
+                <button id="tmpl-mk-v2-btn" className={`tmpl-btn ${activeTemplate === 'mk-v2' ? 'active' : ''}`} onClick={() => setActiveTemplate('mk-v2')}>
+                  ⚡ MK Modern
                 </button>
               </div>
             </div>
@@ -232,10 +231,12 @@ function App() {
                 <label>Issuer Name</label>
                 <input id="mk-issuer-name" type="text" value={issuer.name} onChange={e => setIssuer({...issuer, name: e.target.value})} placeholder="e.g. Mile Academy Team" />
               </div>
-              <div className="fg">
-                <label>Issuer Role / Department</label>
-                <input id="mk-issuer-role" type="text" value={issuer.role} onChange={e => setIssuer({...issuer, role: e.target.value})} placeholder="MultipliersKraft · Capability Solutions" />
-              </div>
+              {activeTemplate !== 'mk-v2' && (
+                <div className="fg">
+                  <label>Issuer Role / Department</label>
+                  <input id="mk-issuer-role" type="text" value={issuer.role} onChange={e => setIssuer({...issuer, role: e.target.value})} placeholder="MultipliersKraft · Capability Solutions" />
+                </div>
+              )}
             </div>
 
             {/* Custom Badge */}
@@ -277,19 +278,21 @@ function App() {
         <div className="prev-bar">
           <h2>Live Certificate Preview</h2>
           <span className="prev-tag">
-            {activeTemplate === 'mk-brand' ? '⚡ MK Brand · Dark' : '🏫 College Co-Brand'} &nbsp;·&nbsp; A4 Landscape · Print-Ready
+            {activeTemplate === 'mk-v1' ? '⚡ MK Glass' : activeTemplate === 'mk-v2' ? '⚡ MK Modern' : '🏫 College Co-Brand'} &nbsp;·&nbsp; A4 Landscape · Print-Ready
           </span>
         </div>
 
         {activeTemplate === 'college' ? (
           <Certificate college={college} program={program} student={student} />
-        ) : (
+        ) : activeTemplate === 'mk-v1' ? (
           <MKCertificate student={student} program={program} issuer={issuer} customBadge={customBadge} />
+        ) : (
+          <MKCertificateV2 student={student} program={program} issuer={issuer} customBadge={customBadge} />
         )}
 
         <div className="cert-note">
           <h3>🔗 LMS Integration &amp; URL Parameters</h3>
-          <p>Student name and certificate data can be auto-populated from your LMS by passing URL query parameters. The template handles both manual entry (form above) and programmatic generation.</p>
+          <p>Student name and certificate data can be auto-populated from your LMS by passing URL query parameters.</p>
           <div className="param-grid">
             <div className="param-chip"><code>?student=</code><br/><span>Full student name</span></div>
             <div className="param-chip"><code>?seat=</code><br/><span>Seat / roll number</span></div>
