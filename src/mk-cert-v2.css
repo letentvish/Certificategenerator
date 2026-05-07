@@ -4,60 +4,69 @@
 
 .mk-cert-v2 {
   width: 1020px;
-  height: 720px; /* Slightly taller to match the image proportions better */
-  background: #0E1752; /* Deep Blue */
+  height: 720px;
+  background-color: #ffffff;
+  background-image: radial-gradient(#222222 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+  /* Deep Blue */
   border-radius: 8px;
   position: relative;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
   color: white;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.3);
   display: flex;
-  padding: 60px;
+  padding: 80px;
+  /* Increased padding for more breathing room */
   box-sizing: border-box;
 }
 
 /* ── Speckled Texture ── */
-.v2-bg-texture {
+.v2-bg-main {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 50%;
+  left: 0;
+  width: 85%;
   height: 100%;
-  opacity: 0.15;
-  background-image: radial-gradient(circle, #000 1px, transparent 1px);
-  background-size: 20px 20px;
-  mask-image: linear-gradient(to right, transparent, black);
-  -webkit-mask-image: linear-gradient(to right, transparent, black);
-  pointer-events: none;
+  background: #5A75FF;
+  z-index: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.v2-bg-texture {
+  display: none;
 }
 
 /* ── Geometric Shapes ── */
 .v2-shape-arc {
   position: absolute;
-  top: -50px;
-  right: -100px;
+  top: 100px;
+  right: -250px;
   width: 500px;
   height: 500px;
-  border: 80px solid #5CF2F2;
+  border: 110px solid #5CF2F2;
   border-radius: 50%;
-  clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
-  opacity: 0.9;
-  transform: rotate(-45deg);
+  clip-path: polygon(0 0, 50% 0, 50% 50%, 0 50%);
+  opacity: 1;
   pointer-events: none;
+  z-index: 1;
 }
 
 .v2-shape-semicircle {
   position: absolute;
   bottom: 0;
-  right: 150px;
-  width: 250px;
-  height: 125px;
+  right: 80px;
+  left: auto;
+  width: 140px;
+  height: 70px;
   background: #50C8FF;
-  border-radius: 0 0 125px 125px;
-  transform: rotate(180deg);
-  opacity: 0.9;
+  border-bottom-left-radius: 70px;
+  border-bottom-right-radius: 70px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  opacity: 1;
   pointer-events: none;
+  z-index: 1;
 }
 
 .v2-shape-bar {
@@ -65,18 +74,19 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 35px;
-  height: 250px;
+  width: 12px;
+  height: 400px;
   background: #5CF2F2;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 8px 8px 0;
   pointer-events: none;
+  opacity: 0.6;
 }
 
 /* ── Layout & Typography ── */
 .v2-content {
   position: relative;
   z-index: 10;
-  width: 100%;
+  width: 75%;
   display: flex;
   flex-direction: column;
 }
@@ -85,14 +95,13 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 .v2-title {
-  font-size: 3.8rem;
-  line-height: 0.95;
+  font-size: 2.5rem;
+  line-height: 1.1;
   font-weight: 800;
-  text-transform: lowercase;
 }
 
 .v2-cyan {
@@ -102,75 +111,79 @@
 .v2-logo-box {
   width: 140px;
   height: auto;
-  margin-right: 20px;
 }
 
 .v2-logo-img {
   width: 100%;
   height: auto;
-  filter: brightness(0) invert(1); /* Make logo white */
+  filter: brightness(0) invert(1);
 }
 
 .v2-body {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+  flex-grow: 1;
 }
 
 .v2-award-text {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   opacity: 0.9;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .v2-name {
-  font-size: 4.2rem;
+  font-size: 2.8rem;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
-  margin: 0 0 25px 0;
+  letter-spacing: 1px;
+  margin: 0 0 20px 0;
   line-height: 1;
 }
 
 .v2-desc {
-  font-size: 1.4rem;
+  font-size: 1rem;
   max-width: 600px;
-  line-height: 1.4;
-  opacity: 0.9;
+  line-height: 1.5;
+  opacity: 0.95;
 }
 
 .v2-footer {
   display: flex;
-  gap: 80px;
+  justify-content: flex-start;
+  gap: 120px;
+  align-items: flex-end;
   margin-top: auto;
 }
 
-.v2-issuer-section, .v2-date-section {
+.v2-issuer-section,
+.v2-date-section {
   display: flex;
   flex-direction: column;
 }
 
 .v2-label {
-  font-size: 1rem;
+  font-size: 0.9rem;
   opacity: 0.7;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 }
 
 .v2-issuer-name {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
 .v2-date {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
 .v2-badge {
   position: absolute;
-  bottom: 80px;
-  right: 140px;
-  width: 200px;
-  height: 200px;
+  bottom: 110px;
+  right: 150px;
+  width: 180px;
+  height: 180px;
   z-index: 20;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
 }
 
 .v2-badge-svg {

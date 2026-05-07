@@ -15,16 +15,16 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
   };
 
   const recipientName = student?.name || '[RECIPIENT NAME]';
-  const courseTitle  = (program?.title || 'COURSE / SKILL PROGRAM').toUpperCase();
+  const courseTitle = (program?.title || 'COURSE / SKILL PROGRAM').toUpperCase();
   const duration = program?.duration || '3 month';
   const issuerName = issuer?.name || 'Donna Stroupe';
   const issueDate = formatDate(student?.date);
 
   /* ── MK Badge Logic (Integrated from Glass Template) ── */
-  const S    = 220;   // viewBox square
-  const cx   = 110;
-  const cy   = 110;
-  const rIn  = 64;    // inner circle
+  const S = 220;   // viewBox square
+  const cx = 110;
+  const cy = 110;
+  const rIn = 64;    // inner circle
   const rHex = 36;    // hexagon scale
   const fontSize = 8.5;
   const charWidthBase = fontSize * 0.52;
@@ -40,7 +40,7 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
   const dynamicSpacing = (finalCirc / totalChars) - charWidthBase;
   const textPath = `M ${cx},${cy - rRng} a ${rRng},${rRng} 0 1,1 0,${2 * rRng} a ${rRng},${rRng} 0 1,1 0,-${2 * rRng}`;
 
-  const hex = (r) => [0,1,2,3,4,5].map(i => {
+  const hex = (r) => [0, 1, 2, 3, 4, 5].map(i => {
     const a = (Math.PI / 180) * (60 * i - 30);
     return `${cx + r * Math.cos(a)},${cy + r * Math.sin(a)}`;
   }).join(' ');
@@ -50,7 +50,7 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
       {/* ── Background Elements ── */}
       <div className="v2-bg-main" />
       <div className="v2-bg-texture" />
-      
+
       {/* ── Geometric Shapes ── */}
       <div className="v2-shape-arc" />
       <div className="v2-shape-semicircle" />
@@ -60,9 +60,9 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
       <div className="v2-content">
         <div className="v2-header">
           <div className="v2-title">
-            <span className="v2-white">certificate</span>
+            <span className="v2-white">Completion</span>
             <br />
-            <span className="v2-cyan">completion</span>
+            <span className="v2-cyan">Certificate</span>
           </div>
           <div className="v2-logo-box">
             <img src="logo.png" alt="MultipliersKraft" className="v2-logo-img" />
@@ -70,10 +70,10 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
         </div>
 
         <div className="v2-body">
-          <p className="v2-award-text">This Certificate awarded to</p>
+          <p className="v2-award-text">This Certificate is awarded to</p>
           <h1 className="v2-name">{recipientName}</h1>
           <p className="v2-desc">
-            Has Successfully completed the course, {courseTitle}, with duration {duration}, wish you success your life
+            Has successfully completed the course <strong>{courseTitle}</strong> for a duration of <strong>{duration}</strong>. We wish you continued success in your professional journey.
           </p>
         </div>
 
@@ -94,12 +94,12 @@ export default function MKCertificateV2({ student, program, issuer, customBadge 
         <svg className="v2-badge-svg" viewBox={`0 0 ${S} ${S}`} xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="v2BadgeBg" cx="38%" cy="30%" r="70%">
-              <stop offset="0%" stopColor="#1c3a88" />
-              <stop offset="100%" stopColor="#091540" />
+              <stop offset="0%" stopColor="#2A4B9B" />
+              <stop offset="100%" stopColor="#102250" />
             </radialGradient>
             <filter id="v2BadgeSoft" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="b" />
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
             <path id="v2BadgePath" d={textPath} />
           </defs>
